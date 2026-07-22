@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:unit_logbook/widgets/new_entry_form.dart';
 
 class LogbookScreen extends StatefulWidget{
   const LogbookScreen({super.key});
@@ -17,9 +18,23 @@ class _LogbookScreenState extends State<LogbookScreen> {
     // load entries
   }
 
-  // Void Load entries
+  // Void Load entries  
 
-  // Void Open new entry sheet
+  void _openNewEntrySheet() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(16)),
+      ),
+      builder: (context) => NewEntryForm(
+        onSubmit: (entry) {
+          setState(() {
+          });
+        },
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +48,12 @@ class _LogbookScreenState extends State<LogbookScreen> {
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: _buildBody()
+      body: _buildBody(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _openNewEntrySheet,
+        tooltip: 'New entry',
+        child: const Icon(Icons.add),
+      ),
     );
   }
 
