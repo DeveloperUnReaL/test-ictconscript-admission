@@ -37,9 +37,39 @@ class _NewEntryFormState extends State<NewEntryForm> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.only(
+      padding: EdgeInsets.all(16),
+      child: Form(key: _formKey, child: Column(
+        children: [
+            Text('New Entry', style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 16),
+            TextFormField(
+              controller: _titleController,
+              decoration: const InputDecoration(labelText: 'Title'),
+              validator: (value) =>
+                  (value == null || value.trim().isEmpty)
+                  ? 'Title is required'
+                  : null,
+            ),
+            const SizedBox(height: 12),
 
-      ),
+            TextFormField(
+              controller: _bodyController,
+              decoration: const InputDecoration(labelText: 'Body'),
+              maxLines: 4,
+              validator: (value) =>
+                  (value == null || value.trim().isEmpty)
+                      ? 'Body is required'
+                      : null,
+            ),
+            const SizedBox(height: 12),
+            const SizedBox(height: 20),
+
+            ElevatedButton(
+              onPressed: _handleSubmit,
+              child: const Text('Add Entry'),
+            ),
+        ],
+      )),
     );
   }
 }
