@@ -45,6 +45,9 @@ class _NewEntryFormState extends State<NewEntryForm> {
             TextFormField(
               controller: _titleController,
               decoration: const InputDecoration(labelText: 'Title'),
+              style: const TextStyle(
+                fontSize: 24,
+              ),
               validator: (value) =>
                   (value == null || value.trim().isEmpty)
                   ? 'Title is required'
@@ -65,8 +68,12 @@ class _NewEntryFormState extends State<NewEntryForm> {
             const SizedBox(height: 20),
 
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Theme.of(context).colorScheme.onPrimary,
+                padding: const EdgeInsets.symmetric(horizontal: 48.0, vertical: 24.0),
+              ),
               onPressed: _handleSubmit,
-              child: const Text('Add Entry'),
+              child: const Text('Add Entry', style: TextStyle(fontSize: 24),),
             ),
         ],
       )),
