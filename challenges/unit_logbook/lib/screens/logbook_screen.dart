@@ -48,7 +48,22 @@ class _LogbookScreenState extends State<LogbookScreen> {
         ),
         backgroundColor: Theme.of(context).colorScheme.primary,
       ),
-      body: _buildBody(),
+      body: Stack(
+        children: [
+          Opacity(
+            opacity: 0.2,
+            child: Container(
+              decoration: const BoxDecoration(
+                image: DecorationImage(
+                  image: AssetImage('assets/bg.png'),
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+          ),
+          _buildBody(),
+        ],
+      ),
       floatingActionButton: FloatingActionButton(
         onPressed: _openNewEntrySheet,
         tooltip: 'New entry',

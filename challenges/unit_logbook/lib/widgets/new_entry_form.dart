@@ -65,6 +65,27 @@ class _NewEntryFormState extends State<NewEntryForm> {
                       : null,
             ),
             const SizedBox(height: 12),
+
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _latController,
+                    decoration: const InputDecoration(labelText: 'Lat (optional)'),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: TextFormField(
+                    controller: _lonController,
+                    decoration: const InputDecoration(labelText: 'Lon (optional)'),
+                    keyboardType: const TextInputType.numberWithOptions(decimal: true, signed: true),
+                  ),
+                ),
+              ],
+            ),
+            
             const SizedBox(height: 20),
 
             ElevatedButton(
