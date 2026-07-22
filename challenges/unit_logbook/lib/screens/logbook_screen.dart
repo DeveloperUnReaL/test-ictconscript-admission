@@ -25,8 +25,13 @@ class _LogbookScreenState extends State<LogbookScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("INTTI Logbook"),
-        backgroundColor: Color.fromARGB(255, 109, 128, 73),
+        title: Text(
+          "INTTI Logbook",
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
+        ),
+        backgroundColor: Theme.of(context).colorScheme.primary,
       ),
       body: _buildBody()
     );
@@ -46,6 +51,8 @@ class _LogbookScreenState extends State<LogbookScreen> {
       );
     }
 
-    return const Center(child: Text('No entries yet. Tap + to add one.'));
+    return const Center(
+      child: Text('No entries yet. Tap + to add one.'),
+    );
   }
 }
