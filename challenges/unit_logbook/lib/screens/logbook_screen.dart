@@ -8,7 +8,7 @@ class LogbookScreen extends StatefulWidget{
 }
 class _LogbookScreenState extends State<LogbookScreen> {
   // This should have 3 states: Loading, Loaded and Error
-  bool _isLoading = true;
+  bool _isLoading = false;
   String? _errorMessage;
 
   @override
@@ -25,13 +25,27 @@ class _LogbookScreenState extends State<LogbookScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  const Text("Intti Logbook"),
+        title: const Text("INTTI Logbook"),
+        backgroundColor: Color.fromARGB(255, 109, 128, 73),
       ),
-      body: const Center(
-        child: Text("placeholder"),
-      ),
+      body: _buildBody()
     );
   }
 
-  // _buildBody
+  Widget _buildBody() {
+    if (_isLoading) {
+      return const Center();
+    }
+
+    if (_errorMessage != null) {
+      return Center(
+        child: Padding(
+          padding: const EdgeInsets.all(24),
+          child: Text(_errorMessage!, textAlign: TextAlign.center),
+        ),
+      );
+    }
+
+    return const Center(child: Text('No entries yet. Tap + to add one.'));
+  }
 }
