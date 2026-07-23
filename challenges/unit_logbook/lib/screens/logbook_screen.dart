@@ -13,7 +13,7 @@ class LogbookScreen extends StatefulWidget{
 
 class _LogbookScreenState extends State<LogbookScreen> {
   final EntryRepository _repository = EntryRepository();
-  // This should have 3 states: Loading, Loaded and Error
+
   bool _isLoading = true;
   String? _errorMessage;
 
@@ -57,7 +57,7 @@ class _LogbookScreenState extends State<LogbookScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "INTTI Logbook",
+          'INTTI Logbook',
           style: TextStyle(
             color: Theme.of(context).colorScheme.onPrimary,
           ),
