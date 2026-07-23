@@ -2,12 +2,18 @@ from contextlib import asynccontextmanager
 import datetime
 import fastapi
 
-## Init db
+from app import db
+
+@asynccontextmanager
+async def lifespan(app: fastapi.FastAPI):
+    db.init_db()
+    yield
 
 app = fastapi.FastAPI(
     title="unit logbook API",
     description="backend REST API",
     version="0.0.1",
+    lifespan=lifespan
 )
 
 def list_entries():

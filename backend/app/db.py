@@ -39,7 +39,6 @@ def get_entry(entry_id: int):
     conn.close()
     return dict(row) if row else None
 
-
 def insert_entry(title: str, body: str, lat, lon, iso_time: str):
     conn = get_connection()
     cursor = conn.execute(
