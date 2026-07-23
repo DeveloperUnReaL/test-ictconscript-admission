@@ -10,6 +10,7 @@ class LogbookScreen extends StatefulWidget{
   @override
   State<LogbookScreen> createState() => _LogbookScreenState();
 }
+
 class _LogbookScreenState extends State<LogbookScreen> {
   final EntryRepository _repository = EntryRepository();
   // This should have 3 states: Loading, Loaded and Error
@@ -44,6 +45,7 @@ class _LogbookScreenState extends State<LogbookScreen> {
       builder: (context) => NewEntryForm(
         onSubmit: (entry) {
           setState(() {
+            _repository.add(entry);
           });
         },
       ),
