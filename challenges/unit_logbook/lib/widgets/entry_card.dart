@@ -19,7 +19,7 @@ class EntryCard extends StatelessWidget {
               children: [
                 Expanded(child: Text(entry.title, style: Theme.of(context).textTheme.titleMedium),),
                 Text(
-                  "datetime",
+                  _formatTimestamp(entry.timestamp),
                   style: Theme.of(context).textTheme.bodySmall,
                 ),
               ],
@@ -30,5 +30,10 @@ class EntryCard extends StatelessWidget {
         ),
       )
     );
+  }
+
+  String _formatTimestamp(DateTime dt) { // Avoid unnecessary package...
+    String two(int n) => n.toString().padLeft(2, '0');
+    return '${dt.year}-${two(dt.month)}-${two(dt.day)} ${two(dt.hour)}:${two(dt.minute)}';
   }
 }

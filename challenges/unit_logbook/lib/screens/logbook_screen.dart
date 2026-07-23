@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:unit_logbook/widgets/new_entry_form.dart';
+import 'package:unit_logbook/models/log_entry.dart';
+import 'package:unit_logbook/widgets/entry_card.dart';
+import 'package:unit_logbook/services/entry_service.dart';
 
 class LogbookScreen extends StatefulWidget{
   const LogbookScreen({super.key});
@@ -8,17 +11,28 @@ class LogbookScreen extends StatefulWidget{
   State<LogbookScreen> createState() => _LogbookScreenState();
 }
 class _LogbookScreenState extends State<LogbookScreen> {
+  final EntryRepository _repository = EntryRepository();
   // This should have 3 states: Loading, Loaded and Error
-  bool _isLoading = false;
+  bool _isLoading = true;
   String? _errorMessage;
 
   @override
   void initState() {
     super.initState();
-    // load entries
+    _loadEntries();
   }
 
-  // Void Load entries  
+  Future<void> _loadEntries() async {
+    try {
+      await _repository.load();
+      setState(() => _isLoading = false);
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+        _errorMessage = 'Failed to load entries: $e';
+      });
+    }
+  }
 
   void _openNewEntrySheet() {
     showModalBottomSheet(
@@ -86,8 +100,19 @@ class _LogbookScreenState extends State<LogbookScreen> {
       );
     }
 
-    return const Center(
-      child: Text('No entries yet. Tap + to add one.'),
+    final entries = _repository.entries;
+
+    if (entries.isEmpty) {
+      return const Center(child: Text('No entries yet. Tap + to add one.'));
+    }
+
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      itemCount: entries.length,
+      itemBuilder: (context, index) {
+        final LogEntry entry = entries[index];
+        return EntryCard(entry: entry);
+      },
     );
   }
 }
