@@ -1,23 +1,23 @@
 from contextlib import asynccontextmanager
 import datetime
-import fastapi
+from fastapi import FastAPI, PlainTextResponse, HTTPException
 
 from app import db
 from app.models import LogEntryIn, LogEntryOut
 
 @asynccontextmanager
-async def lifespan(app: fastapi.FastAPI):
+async def lifespan(app: FastAPI):
     db.init_db()
     yield
 
-app = fastapi.FastAPI(
+app = FastAPI(
     title="unit logbook API",
     description="backend REST API",
     version="0.0.1",
     lifespan=lifespan
 )
 
-@app.get("/health", response_class=fastapi.PlainTextResponse, tags=["health"])
+@app.get("/health", response_class=PlainTextResponse, tags=["health"])
 def health_check():
     return "OK"
 
@@ -29,7 +29,7 @@ def list_entries():
 def get_single_entry(entry_id: int):
     entry = db.get_entry(entry_id)
     if entry is None:
-        raise fastapi.HTTPException(status_code=404, detail=f"entry id {entry_id} not found")
+        raise HTTPException(status_code=404, detail=f"entry id {entry_id} not found")
     return entry
 
 

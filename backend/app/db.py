@@ -26,6 +26,18 @@ def init_db():
         """
     )
     conn.commit()
+    count = conn.execute("SELECT COUNT(*) FROM entries").fetchone()[0]
+    if count == 0 and SAMPLE_DATA_PATH.exists():
+        with open(SAMPLE_DATA_PATH) as f:
+            sample_entries = json.load(f)
+        for entry in sample_entries:
+            conn.execute(
+                "INSERT INTO entries (title, body, lat, lon, isoTime) VALUES (?, ?, ?, ?, ?)",
+                (entry["title"], entry["body"], entry.get("lat"), entry.get("lon"), entry["isoTime"]),
+            )
+        conn.commit()
+    conn.close()
+
 
 def get_all_entries():
     conn = get_connection()
