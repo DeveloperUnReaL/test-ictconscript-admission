@@ -3,6 +3,7 @@ import datetime
 import fastapi
 
 from app import db
+from app.models import LogEntryIn, LogEntryOut
 
 @asynccontextmanager
 async def lifespan(app: fastapi.FastAPI):
@@ -17,12 +18,12 @@ app = fastapi.FastAPI(
 )
 
 def list_entries():
-    return #db.get_all_entries()
+    return db.get_all_entries()
 
 def get_single_entry(entry_id: int):
     entry = db.get_entry(entry_id)
     if entry is None:
-        raise #error
+        raise fastapi.HTTPException(status_code=404, detail=f"entry id {entry_id} not found")
     return entry
 
 def create_entry(new_entry: LogEntryIn):
