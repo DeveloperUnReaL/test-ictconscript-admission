@@ -17,15 +17,23 @@ app = fastapi.FastAPI(
     lifespan=lifespan
 )
 
+@app.get("/health", response_class=fastapi.PlainTextResponse, tags=["health"])
+def health_check():
+    return "OK"
+
+@app.get("/entries", response_model=list[LogEntryOut], tags=["entries"])
 def list_entries():
     return db.get_all_entries()
 
+@app.get("/entries/{entry_id}", response_model=LogEntryOut, tags=["entries"])
 def get_single_entry(entry_id: int):
     entry = db.get_entry(entry_id)
     if entry is None:
         raise fastapi.HTTPException(status_code=404, detail=f"entry id {entry_id} not found")
     return entry
 
+
+@app.post("/entries", response_model=LogEntryOut, status_code=201, tags=["entries"])
 def create_entry(new_entry: LogEntryIn):
     iso_time = datetime.now(datetime.timezone.utc).isoformat()
     created = db.insert_entry(
