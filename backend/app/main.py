@@ -27,3 +27,12 @@ def get_single_entry(entry_id: int):
     return entry
 
 def create_entry(new_entry: LogEntryIn):
+    iso_time = datetime.now(datetime.timezone.utc).isoformat()
+    created = db.insert_entry(
+        title=new_entry.title,
+        body=new_entry.body,
+        lat=new_entry.lat,
+        lon=new_entry.lon,
+        iso_time=iso_time,
+    )
+    return created
