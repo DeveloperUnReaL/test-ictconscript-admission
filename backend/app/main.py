@@ -1,6 +1,7 @@
 from contextlib import asynccontextmanager
 import datetime
-from fastapi import FastAPI, PlainTextResponse, HTTPException
+from fastapi import FastAPI, HTTPException
+from fastapi.responses import PlainTextResponse
 
 from app import db
 from app.models import LogEntryIn, LogEntryOut
